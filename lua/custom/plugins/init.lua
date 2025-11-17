@@ -3,4 +3,6 @@
 --
 -- See the kickstart.nvim README for more information
 --
-return {}
+return {
+  { dir = '~/code/nvimeap/' },
+}
