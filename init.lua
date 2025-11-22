@@ -29,14 +29,6 @@ vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 -- text.
 vim.o.textwidth = 80
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
-end)
-
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -329,6 +321,14 @@ require('lazy').setup({
         --   },
         -- },
         -- pickers = {}
+        defaults = {
+          file_ignore_patterns = {
+            '^.git/',
+            '/.git/',
+            '^deps/',
+            '/deps/',
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -837,6 +837,10 @@ require('lazy').setup({
       require('mini.surround').setup()
 
       require('mini.git').setup()
+
+      require('mini.test').setup()
+
+      vim.keymap.set('n', '<leader>rt', ':lua MiniTest.run()<CR>', { desc = 'Run all tests in current plugin.' })
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
